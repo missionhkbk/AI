@@ -1,0 +1,79 @@
+import sys
+
+def nearest_neighbor(graph):
+
+num_cities = len(graph)
+
+visited = [False] * num_cities
+
+path = []
+
+# Start from the first city
+
+current_city = 0
+
+visited[current_city] = True
+
+path.append(current_city)
+
+# Visit each city exactly once
+
+for _ in range(num_cities - 1):
+
+nearest_city = None
+
+min_distance = sys.maxsize
+
+# Find the nearest unvisited city
+
+for next_city in range(num_cities):
+
+if not visited[next_city] and graph[current_city][next_city] < min_distance:
+
+nearest_city = next_city
+
+min_distance = graph[current_city][next_city]
+
+# Move to the nearest unvisited city
+
+current_city = nearest_city
+
+visited[current_city] = True
+
+path.append(current_city)
+
+# Return to the starting city
+
+path.append(path[0])
+
+return path
+
+# Function to take input from the user
+
+def take_input():
+
+graph = []
+
+num_cities = int(input("Enter the number of cities: "))
+
+print("Enter the distance matrix (one row at a time):")
+for _ in range(num_cities):
+row = list(map(int, input().split()))
+
+graph.append(row)
+
+return graph
+
+# Example usage
+
+if __name__ == "__main__":
+
+# Take input from the user
+
+graph = take_input()
+
+# Find a near-optimal path using the nearest neighbor algorithm
+
+optimal_path = nearest_neighbor(graph)
+
+print("Optimal Path:", optimal_path)
